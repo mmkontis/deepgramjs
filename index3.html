@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivid Blue Circle with Artistic Noise and White Brushes</title>
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            background-color: #0066CC; /* More vivid blue background */
+        }
+
+        .noise-filter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: url('data:image/png;base64,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');
+            animation: noiseAnimation 0.2s infinite alternate;
+        }
+
+        .cloud {
+            position: absolute;
+            opacity: 0;
+            filter: blur(10px);
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(var(--moveX), var(--moveY)); }
+        }
+
+        @keyframes noiseAnimation {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(1px, 1px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="circle" id="circle">
+        <div class="noise-filter"></div>
+    </div>
+
+    <script>
+        const circle = document.getElementById('circle');
+        const colors = ['#FFFFFF'];
+
+        function createCloud() {
+            const cloud = document.createElement('div');
+            const size = Math.random() * 150 + 30;
+            const duration = Math.random() * 5000 + 5000;
+            const moveX = (Math.random() - 0.5) * 100;
+            const moveY = (Math.random() - 0.5) * 100;
+            
+            cloud.style.width = `${size}px`;
+            cloud.style.height = `${size}px`;
+            cloud.style.borderRadius = '50%';
+            cloud.style.left = `${Math.random() * 250}px`;
+            cloud.style.top = `${Math.random() * 250}px`;
+            cloud.style.setProperty('--moveX', `${moveX}px`);
+            cloud.style.setProperty('--moveY', `${moveY}px`);
+            cloud.classList.add('cloud');
+
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            cloud.style.backgroundColor = color;
+
+            cloud.style.animation = `
+                fadeInOut ${duration}ms,
+                drift ${duration * 1.5}ms
+            `;
+
+            circle.appendChild(cloud);
+
+            setTimeout(() => {
+                cloud.remove();
+            }, duration);
+        }
+
+        function addRandomClouds() {
+            const cloudCount = Math.floor(Math.random() * 5) + 3;
+            for (let i = 0; i < cloudCount; i++) {
+                setTimeout(createCloud, Math.random() * 2000);
+            }
+            setTimeout(addRandomClouds, Math.random() * 1000 + 500);
+        }
+
+        addRandomClouds();
+    </script>
+</body>
+</html>

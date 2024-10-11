@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora Borealis Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+        }
+        .circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+        .noise-filter {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .aurora {
+            position: absolute;
+            opacity: 0;
+            filter: blur(30px);
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.7; }
+        }
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="circle" id="circle">
+        <canvas id="noise-filter" class="noise-filter" width="300" height="300"></canvas>
+    </div>
+
+    <script>
+        const circle = document.getElementById('circle');
+        const noiseFilter = document.getElementById('noise-filter');
+        const ctx = noiseFilter.getContext('2d');
+        const auroraColors = [
+            'rgba(97, 225, 169, 0.7)',  // Green
+            'rgba(85, 197, 238, 0.7)',  // Blue
+            'rgba(255, 111, 145, 0.7)', // Pink
+            'rgba(160, 118, 249, 0.7)'  // Purple
+        ];
+
+        noiseFilter.width = 300;
+        noiseFilter.height = 300;
+
+        function createAurora() {
+            const aurora = document.createElement('div');
+            const width = Math.random() * 100 + 200; // Wider aurora bands
+            const height = Math.random() * 100 + 50;
+            const duration = Math.random() * 10000 + 8000;
+            
+            aurora.style.width = `${width}px`;
+            aurora.style.height = `${height}px`;
+            aurora.style.left = `${Math.random() * 200 - 50}px`;
+            aurora.style.top = `${Math.random() * 250}px`;
+            aurora.classList.add('aurora');
+
+            const color = auroraColors[Math.floor(Math.random() * auroraColors.length)];
+            aurora.style.background = `linear-gradient(to bottom, ${color}, transparent)`;
+
+            aurora.style.animation = `
+                fadeInOut ${duration}ms infinite,
+                wave ${duration * 0.75}ms infinite
+            `;
+
+            circle.appendChild(aurora);
+
+            setTimeout(() => {
+                aurora.remove();
+            }, duration);
+        }
+
+        function generateStars() {
+            const imageData = ctx.createImageData(300, 300);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const rand = Math.random();
+                if (rand < 0.002) {
+                    const brightness = Math.random() * 155 + 100;
+                    data[i] = brightness;     // red
+                    data[i + 1] = brightness; // green
+                    data[i + 2] = brightness; // blue
+                    data[i + 3] = Math.random() * 255;   // alpha
+                } else {
+                    data[i] = 0;     // red
+                    data[i + 1] = 0; // green
+                    data[i + 2] = 0; // blue
+                    data[i + 3] = 0; // alpha
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function addRandomAurora() {
+            const auroraCount = Math.floor(Math.random() * 2) + 2;
+            for (let i = 0; i < auroraCount; i++) {
+                setTimeout(createAurora, Math.random() * 3000);
+            }
+            setTimeout(addRandomAurora, Math.random() * 3000 + 2000);
+        }
+
+        generateStars();
+        setInterval(generateStars, 15000);
+        addRandomAurora();
+    </script>
+</body>
+</html>
